@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Disclosure, DisclosureButton, Menu, MenuButton, MenuItem } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/ui/button";
 import { FaSearch } from "react-icons/fa";
 import { auth, db, storage } from "@/firebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, onAuthStateChanged } from "firebase/auth";
@@ -28,6 +28,8 @@ const Navbar = () => {
   });
   const [userPhoto, setUserPhoto] = useState<string | null>(null);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+  const navigate = useNavigate();
 
   // Track user state across sessions
   useEffect(() => {
@@ -65,7 +67,7 @@ const Navbar = () => {
     { name: "About", href: "/about", current: false },
     { name: "Contact", href: "/contact", current: false },
   ]);
-  
+
   // Update the navigation links based on the user role (admin)
   useEffect(() => {
     if (isAdmin) {
@@ -114,7 +116,7 @@ const Navbar = () => {
         email,
         photoURL,
         role: "user",
-        score:0
+        score: 0,
       });
 
       alert("Registration successful!");
@@ -129,28 +131,27 @@ const Navbar = () => {
   };
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();  // Prevent page refresh
+    e.preventDefault(); // Prevent page refresh
     const { email, password } = formData;
-  
+
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-  
+
       setUserPhoto(user.photoURL);
       setIsLoggedIn(true);
       setShowModal(false);
-      navigate("/");  // Redirect to homepage or profile
-  
+      navigate("/"); // Redirect to homepage or profile
+
       // Admin check
       if (user.email === "rajvelr755@gmail.com") {
-        navigate("/dashboard");  // Redirect to Dashboard
+        navigate("/dashboard"); // Redirect to Dashboard
       }
     } catch (error) {
       const e = error as Error;
       console.error("Error: ", e.message);
     }
   };
-  
 
   const handleLogout = async () => {
     try {
@@ -166,8 +167,6 @@ const Navbar = () => {
       }
     }
   };
-
-  const navigate = useNavigate();
 
   return (
     <>
@@ -315,15 +314,15 @@ const Navbar = () => {
                   <button
                     type="button"
                     onClick={() => setShowModal(false)}
-                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md"
+                    className="text-sm font-medium text-gray-600 hover:underline"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md"
+                    className="text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md"
                   >
-                    Submit
+                    {isRegistering ? "Register" : "Log in"}
                   </button>
                 </div>
               </div>
@@ -332,23 +331,23 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* Logout Confirmation Modal */}
+      {/* Confirm logout */}
       {showLogoutConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-md shadow-md w-96">
-            <h2 className="text-lg font-bold mb-4">Confirm Logout</h2>
-            <div className="flex justify-between">
-              <button
-                onClick={() => setShowLogoutConfirm(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md"
-              >
-                Cancel
-              </button>
+            <h3 className="text-lg font-semibold mb-4">Are you sure you want to log out?</h3>
+            <div className="flex space-x-4">
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-md"
+                className="px-4 py-2 bg-red-600 text-white rounded-md"
               >
-                Logout
+                Yes
+              </button>
+              <button
+                onClick={() => setShowLogoutConfirm(false)}
+                className="px-4 py-2 bg-gray-300 rounded-md"
+              >
+                No
               </button>
             </div>
           </div>
