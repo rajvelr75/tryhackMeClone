@@ -14,7 +14,7 @@ const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false); // Add state for checking admin
+  const [isAdmin, setIsAdmin] = useState(false); 
   const [formData, setFormData] = useState<{
     name: string;
     email: string;
@@ -31,14 +31,12 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
-  // Track user state across sessions
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsLoggedIn(true);
         setUserPhoto(user.photoURL || null);
 
-        // Fetch user role (for example, check if the user is an admin)
         const fetchUserRole = async () => {
           const userRef = doc(db, "users", user.uid);
           const userDoc = await getDoc(userRef);
@@ -54,7 +52,7 @@ const Navbar = () => {
         fetchUserRole();
       } else {
         setIsLoggedIn(false);
-        setIsAdmin(false); // Reset admin status when logged out
+        setIsAdmin(false); 
         setUserPhoto(null);
       }
     });
@@ -68,7 +66,6 @@ const Navbar = () => {
     { name: "Contact", href: "/contact", current: false },
   ]);
 
-  // Update the navigation links based on the user role (admin)
   useEffect(() => {
     if (isAdmin) {
       setNavigation((prevNav) => [
@@ -121,7 +118,7 @@ const Navbar = () => {
 
       alert("Registration successful!");
       setShowModal(false);
-      setIsRegistering(false); // Redirect to login form after registration
+      setIsRegistering(false); 
     } catch (error) {
       if (error instanceof Error) {
         console.error("Error registering user:", error.message);
@@ -131,7 +128,7 @@ const Navbar = () => {
   };
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent page refresh
+    e.preventDefault(); 
     const { email, password } = formData;
 
     try {
@@ -141,11 +138,10 @@ const Navbar = () => {
       setUserPhoto(user.photoURL);
       setIsLoggedIn(true);
       setShowModal(false);
-      navigate("/"); // Redirect to homepage or profile
+      navigate("/"); 
 
-      // Admin check
       if (user.email === "rajvelr755@gmail.com") {
-        navigate("/dashboard"); // Redirect to Dashboard
+        navigate("/dashboard"); 
       }
     } catch (error) {
       const e = error as Error;
@@ -158,8 +154,8 @@ const Navbar = () => {
       await signOut(auth);
       setIsLoggedIn(false);
       setUserPhoto(null);
-      setIsAdmin(false); // Reset admin status on logout
-      setShowLogoutConfirm(false); // Close logout confirmation modal
+      setIsAdmin(false); 
+      setShowLogoutConfirm(false); 
       alert("Logged out successfully!");
     } catch (error) {
       if (error instanceof Error) {
@@ -209,7 +205,7 @@ const Navbar = () => {
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <FaSearch color="gold" size={20} className="mr-6" />
                   {!isLoggedIn ? (
-                    <Button onClick={() => setShowModal(true)}>Log in</Button>
+                    <Button onClick={() => setShowModal(true)} className="text-white">Log in</Button>
                   ) : (
                     <Menu as="div" className="relative ml-3">
                       <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -248,7 +244,6 @@ const Navbar = () => {
         )}
       </Disclosure>
       
-      {/* Modal for Login/Register */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-md shadow-md w-96">
@@ -331,7 +326,6 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* Confirm logout */}
       {showLogoutConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-md shadow-md w-96">

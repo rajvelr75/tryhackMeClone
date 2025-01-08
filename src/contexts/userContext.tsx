@@ -10,13 +10,13 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
-  const auth = getAuth(); // Initialize Firebase Auth
+  const auth = getAuth(); 
 
   useEffect(() => {
     onAuthStateChanged(auth, (user: User | null) => {
       console.log(user?.uid)
       if (user) {
-        setUserId(user.uid); // Firebase UID
+        setUserId(user.uid); 
       } else {
         setUserId(undefined);
       }

@@ -20,7 +20,7 @@ import ThumbsButtons from "./ui/ThumbsButtons";
 const TopContent = () => {
   return (
     <>
-    <div className="bg-gold">
+    <div className="bg-metallic-gold">
     <Breadcrumb>
         <BreadcrumbList>
             <BreadcrumbItem className="mt-4 ml-4">

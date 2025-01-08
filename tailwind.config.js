@@ -4,8 +4,11 @@ module.exports = {
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
   	extend: {
+		backgroundImage: {
+			'metallic-gold': 'linear-gradient(90deg, #FFD700, #FFC107, #FFB300, #D4AF37)',
+		},
   		colors: {
-			gold: "#FFD700",
+			gold: "#f3b614",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

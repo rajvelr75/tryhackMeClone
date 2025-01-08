@@ -2,22 +2,21 @@ import { useState } from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 
 const ThumbsButtons = () => {
-  // State for managing button classes
   const [isGreen, setIsGreen] = useState(false);
   const [isRed, setIsRed] = useState(false);
 
   const handleGreenClick = () => {
     if (isRed) {
-      setIsRed(false); // Remove red class if it was applied
+      setIsRed(false); 
     }
-    setIsGreen(!isGreen); // Toggle green class
+    setIsGreen(!isGreen); 
   };
 
   const handleRedClick = () => {
     if (isGreen) {
-      setIsGreen(false); // Remove green class if it was applied
+      setIsGreen(false); 
     }
-    setIsRed(!isRed); // Toggle red class
+    setIsRed(!isRed); 
   };
 
   return (

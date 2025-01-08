@@ -9,6 +9,7 @@ interface AnswerProps {
   className?: string;
   readOnly?: boolean;
   type: string;
+  submitDisabled?: boolean;
 }
 
 const Answer: React.FC<AnswerProps> = ({ question, holder, readOnly, type, onSubmit }) => {
@@ -20,7 +21,7 @@ const Answer: React.FC<AnswerProps> = ({ question, holder, readOnly, type, onSub
 
   const handleButtonClick = () => {
     if (onSubmit) {
-      onSubmit(inputValue); // Pass the input value
+      onSubmit(inputValue); 
     }
   };
 
@@ -36,7 +37,7 @@ const Answer: React.FC<AnswerProps> = ({ question, holder, readOnly, type, onSub
           onChange={handleInputChange}
           className="custom-class"
         />
-        <Button className="h-9 mt-5 ml-5 w-56 text-gray-950" onClick={handleButtonClick}>
+        <Button className="h-9 mt-5 ml-5 w-56 text-gray-900" onClick={handleButtonClick}>
           Submit Answer
         </Button>
       </div>
