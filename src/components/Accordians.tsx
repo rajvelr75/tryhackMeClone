@@ -153,7 +153,7 @@ const Accordians = ({ userId }: { userId: string | undefined }) => {
     }
 
     if (isCorrect) {
-      toast.success("Correct Answer! Submitted Successfully");
+      toast.success("Submitted Successfully");
 
       const updatedAnsweredTasks = [...answeredTasks, accordionIndex];
       const updatedScore = score + 10;
